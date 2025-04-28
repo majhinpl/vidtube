@@ -12,15 +12,17 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "16kb" }));
-app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.static("public"));
 app.use(cookieParser());
 
 // import routes
-import { helthcheck } from "./controllers/helthcheck.controllers.js";
+import userRouter from "./routes/user.routes.js";
+import errorHandler from "./middlewares/error.middlewares.js";
 
 // route
-app.use("/api/v1/helthcheck", helthcheck);
+app.use("/api/v1/users", userRouter);
 
+app.use(errorHandler);
 export { app };
